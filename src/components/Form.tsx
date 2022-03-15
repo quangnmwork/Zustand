@@ -1,17 +1,20 @@
 import React, { useRef } from "react";
 import Button from "./Button";
 import Input from "./Input";
-import { useStore } from "../zustand/useStore";
+import { useStore, useTheme } from "../zustand/useStore";
 
 const Form: React.FC<{}> = () => {
-  const handlerClick = (event: React.MouseEvent) => {};
   const numberInputRef = useRef<HTMLInputElement>(null);
   const countStore = useStore();
+  const themeStore = useTheme();
 
   return (
     <div className="w-3/5  p-3 bg-green-300 flex flex-col items-center">
       <div className=" flex justify-center gap-2">
-        <Button text="Toggle theme" onClickHandler={handlerClick} />
+        <Button
+          text="Toggle theme"
+          onClickHandler={themeStore.toggleDarkMode}
+        />
         <Button text="Increment" onClickHandler={countStore.increment} />
         <Button text="Decrement" onClickHandler={countStore.decrement} />
         <Button
