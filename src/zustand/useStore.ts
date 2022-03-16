@@ -9,6 +9,10 @@ interface Theme {
   darkMode: boolean;
   toggleDarkMode: () => void;
 }
+interface DogList {
+  dogList: any;
+  fetchDogList: () => void;
+}
 export const useStore = create<CountStore>(
   (set: SetState<CountStore>, get: GetState<CountStore>) => ({
     count: 0,
@@ -32,6 +36,17 @@ export const useTheme = create<Theme>(
     toggleDarkMode: (): void => {
       const { darkMode } = get();
       set({ darkMode: !darkMode });
+    },
+  })
+);
+export const useDogList = create<DogList>(
+  (set: SetState<DogList>, get: GetState<DogList>) => ({
+    dogList: {},
+    fetchDogList: async (): Promise<void> => {
+      const res = await fetch("https://pokeapi.co/api/v2/pokemon/ditto");
+      const data = await res.json();
+
+      set({ dogList: data });
     },
   })
 );

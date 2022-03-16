@@ -1,6 +1,7 @@
 import Form from "./components/Form";
 import "./App.css";
 import { useTheme } from "./zustand/useStore";
+import List from "./components/List";
 
 function App() {
   const theme: boolean = useTheme((state) => state.darkMode);
@@ -10,6 +11,9 @@ function App() {
     <div className={bgColor + " h-full"}>
       <div className="flex justify-center pt-14">
         <Form />
+      </div>
+      <div>
+        <List />
       </div>
     </div>
   );
