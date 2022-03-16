@@ -13,11 +13,12 @@ const nextState = produce(baseState, (drafState) => {
 });
 
 console.log("Base state", baseState.age, "Next state", nextState.age);
-const todos = [
-  /* 2 todo objects in here */
-];
+nextState.age = 22;
+// const todos = [
+//   /* 2 todo objects in here */
+// ];
 
-const nextTodos = produce(todos, (draft) => {
-  draft.push({ text: "learn immer", done: true });
-  draft[1].done = true;
-});
+// const nextTodos = produce(todos, (draft) => {
+//   draft.push({ text: "learn immer", done: true });
+//   draft[1].done = true;
+// });
