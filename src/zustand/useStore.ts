@@ -1,4 +1,5 @@
 import create, { SetState, GetState } from "zustand";
+import { persist } from "zustand/middleware";
 interface CountStore {
   count: number;
   increment: () => void;
@@ -14,21 +15,27 @@ interface DogList {
   fetchDogList: () => void;
 }
 export const useStore = create<CountStore>(
-  (set: SetState<CountStore>, get: GetState<CountStore>) => ({
-    count: 0,
-    increment: (): void => {
-      const { count } = get();
-      set({ count: count + 1 });
-    },
-    decrement: (): void => {
-      const { count } = get();
-      set({ count: count - 1 });
-    },
-    incrementWithValue: (inputValue: number): void => {
-      const { count } = get();
-      set({ count: count + inputValue });
-    },
-  })
+  persist(
+    (set: SetState<CountStore>, get: GetState<CountStore>) => ({
+      count: 0,
+      increment: (): void => {
+        const { count } = get();
+        set({ count: count + 1 });
+      },
+      decrement: (): void => {
+        const { count } = get();
+        set({ count: count - 1 });
+      },
+      incrementWithValue: (inputValue: number): void => {
+        const { count } = get();
+        set({ count: count + inputValue });
+      },
+    }),
+    {
+      name: "countStorage",
+      getStorage: () => sessionStorage,
+    }
+  )
 );
 export const useTheme = create<Theme>(
   (set: SetState<Theme>, get: GetState<Theme>) => ({
@@ -45,7 +52,6 @@ export const useDogList = create<DogList>(
     fetchDogList: async (): Promise<void> => {
       const res = await fetch("https://pokeapi.co/api/v2/pokemon/ditto");
       const data = await res.json();
-
       set({ dogList: data });
     },
   })
